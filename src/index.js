@@ -6,7 +6,6 @@ import './index.scss';
 // import Breath from './AppPerformance';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BreathMachineProvider } from './context/breathMachineContext';
 
 ReactDOM.render(
   <React.StrictMode>

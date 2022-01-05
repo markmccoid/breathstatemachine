@@ -13,7 +13,7 @@ export type BreathEvent =
   | { type: "NEXT" }
   | {
     type: "UPDATE_DEFAULTS";
-    sessionSettings: Partial<Omit<BreathContext, "extend" | "sessionStats" | "sessionComplete" | "interval" | "elapsed">>
+    sessionSettings: Partial<Omit<BreathContext, "extend" | "interval" | "elapsed">>
   };
 
 export type sessionStats =
@@ -94,11 +94,12 @@ const extendToggle = assign<BreathContext, BreathEvent>({
   extend: (ctx) => !ctx.extend,
 });
 
-const updateDefaults = assign<BreathContext, BreathEvent>((ctx, event) => {
+const updateSessionSettings = assign<BreathContext, BreathEvent>((ctx, event) => {
   // checking for type.  Only way to appease typescript
   if (event.type === "UPDATE_DEFAULTS") {
     // - decided to just merge the passed sessionSettings object with the context
-    // - this way users can send one or more settings 
+    // - this way users can send one or more settings, prettty much affect any
+    // - part of context that is needed.
     const mergedSettings = { ...ctx, ...event.sessionSettings };
     return mergedSettings;
     // return {
@@ -209,7 +210,7 @@ export const breathMachine = createMachine<BreathContext, BreathEvent>(
         on: {
           START: "breathing",
           UPDATE_DEFAULTS: {
-            actions: ["updateDefaults"],
+            actions: ["updateSessionSettings"],
           },
         },
       },
@@ -406,7 +407,7 @@ export const breathMachine = createMachine<BreathContext, BreathEvent>(
       resetBreathCurrRep,
       resetSessionStats,
       resetContext,
-      updateDefaults,
+      updateSessionSettings,
       updateElapsedTime,
       updateLongHoldStats,
       updateInhaleHoldStats,

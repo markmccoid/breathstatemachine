@@ -1,7 +1,7 @@
 import React, { createContext } from 'react';
 import { useInterpret } from '@xstate/react';
 import { ActorRefFrom } from 'xstate';
-import { breathMachine, BreathContext } from '../machines/breathMachine2022';
+import { breathMachine, BreathContext } from '../machines/breathMachine';
 
 import { isEqual } from 'lodash';
 

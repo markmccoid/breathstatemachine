@@ -4,7 +4,7 @@ import {
   SessionSettingsType,
 } from './context/breathMachineContext';
 
-import Breath from './AppPerformance';
+import BreathSession from './components/BreathSession';
 
 const machineSettings = [
   {
@@ -40,7 +40,7 @@ const App = () => {
       </div>
       {showMachine && (
         <BreathMachineProvider>
-          <Breath sessionSettings={machineToUse} />
+          <BreathSession sessionSettings={machineToUse} />
         </BreathMachineProvider>
       )}
     </div>

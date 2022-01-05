@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useSelector } from '@xstate/react';
 // import { breathMachine } from './machines/breathMachine2022';
 import { useBreathState, objCompare } from '../context/breathMachineContext';
-import { useBreathEvents } from '../hooks/useSelections';
+import { useBreathEvents } from '../hooks/useBreathMachineHooks';
 
 const getConfigData = (state) => {
   return {
@@ -56,7 +56,7 @@ const UpdateConfigForm = () => {
               //     breathReps: parseInt(e.target.value),
               //   },
               // })
-              breathEvents.updateDefaults({
+              breathEvents.updateSessionSettings({
                 breathReps: parseInt(e.target.value),
               })
             }
@@ -71,7 +71,7 @@ const UpdateConfigForm = () => {
             onChange={(e) =>
               // setConfig({ {breathReps, holdTime, breathRounds}, holdTime: parseInt(e.target.value) })
 
-              breathEvents.updateDefaults({
+              breathEvents.updateSessionSettings({
                 holdTime: parseInt(e.target.value),
               })
             }
@@ -86,7 +86,7 @@ const UpdateConfigForm = () => {
             onChange={(e) =>
               // setConfig({ {breathReps, holdTime, breathRounds}, breathRounds: parseInt(e.target.value) })
 
-              breathEvents.updateDefaults({
+              breathEvents.updateSessionSettings({
                 breathRounds: parseInt(e.target.value),
               })
             }
