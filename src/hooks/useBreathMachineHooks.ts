@@ -1,4 +1,5 @@
 import { useBreathState, objCompare, SessionSettingsType } from "../context/breathMachineContext";
+import { useCallback } from "react";
 import { useSelector } from "@xstate/react";
 import { Sender } from "xstate";
 import { BreathContext, BreathEvent } from "../machines/breathMachine";
@@ -34,6 +35,24 @@ export const useBreathMachineMain = (): [
 
   return [breathData, send];
 };
+
+export const useBreathMethods = () => {
+  const breathStateServices = useBreathState();
+  const methods = useSelector(
+    breathStateServices.breathStateService,
+    state => ({
+      nextEvents: [...state.nextEvents].filter(e => e !== "TICK"),
+      // matches: state.matches
+    }),
+    objCompare
+  );
+  // const matches = useSelector(
+  //   breathStateServices.breathStateService,
+  //   state => state.matches,
+  //   objCompare
+  // );
+  return methods
+}
 
 //------------------------------------
 // just returns the elapsed number

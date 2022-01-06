@@ -20,7 +20,7 @@ export type sessionStats =
   | {
     breaths: number;
     holdTimeSeconds: number;
-    inhaleHoldTimeSeconds: number;
+    recoveryHoldTimeSeconds: number;
   }
   | {};
 export type BreathContext = {
@@ -33,7 +33,7 @@ export type BreathContext = {
   breathCurrRep: number; // Current breath in current round
   //-- Long hold config
   holdTime: number; // hold time in seconds
-  inhaleHoldTime: number; // inhaled holding time in seconds
+  recoveryHoldTime: number; // inhaled holding time in seconds
   actionPauseTimeIn: number; // seconds to "wait" before inhale holds
   actionPauseTimeOut: number; // seconds to "wait" after inhale holds
   extend: boolean; // When true, extend the hold time, don't stop the timer
@@ -125,7 +125,7 @@ const updateSessionStats = assign<BreathContext, BreathEvent>({
         [ctx.breathCurrRound]: {
           breaths: 0,
           holdTimeSeconds: 0,
-          inhaleHoldTimeSeconds: 0,
+          recoveryHoldTimeSeconds: 0,
         },
       };
     }
@@ -163,7 +163,7 @@ const updateInhaleHoldStats = assign<BreathContext, BreathEvent>({
       ...ctx.sessionStats,
       [ctx.breathCurrRound]: {
         ...ctx.sessionStats[ctx.breathCurrRound],
-        inhaleHoldTimeSeconds: Math.floor(ctx.elapsed),
+        recoveryHoldTimeSeconds: Math.floor(ctx.elapsed),
       },
     };
   },
@@ -190,7 +190,7 @@ export const breathMachine = createMachine<BreathContext, BreathEvent>(
       //-- Long hold config
       holdTime: 5, // hold time in seconds
       extend: false, // When true, extend the hold time, don't stop the timer
-      inhaleHoldTime: 5, // inhaled holding time in seconds
+      recoveryHoldTime: 5, // inhaled holding time in seconds
       actionPauseTimeIn: 3, // seconds to "wait" before inhale holds
       actionPauseTimeOut: 7, // seconds to "wait" after inhale holds
       //-- Breathing session config
@@ -369,7 +369,7 @@ export const breathMachine = createMachine<BreathContext, BreathEvent>(
             always: {
               target: "#breathmachine.outropause",
               cond: (ctx) =>
-                isElapsedGreaterThan("inhaleHoldTime")(ctx) && !ctx.extend,
+                isElapsedGreaterThan("recoveryHoldTime")(ctx) && !ctx.extend,
             },
           },
           paused: {

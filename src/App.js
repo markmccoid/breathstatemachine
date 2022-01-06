@@ -8,10 +8,15 @@ import BreathSession from './components/BreathSession';
 
 const machineSettings = [
   {
-    breathReps: 30,
-    holdTime: 120,
-    breathRounds: 5,
-    pauseTime: 2,
+    inhaleTime: 1.75,
+    exhaleTime: 1.75,
+    pauseTime: 0,
+    breathReps: 3,
+    breathRounds: 4,
+    holdTime: 12,
+    recoveryHoldTime: 10,
+    actionPauseTimeIn: 2,
+    actionPauseTimeOut: 3,
   },
   {
     breathReps: 5,

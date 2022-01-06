@@ -9,10 +9,12 @@ import {
 import UpdateConfigForm from '../components/UpdateConfigForm';
 import TimeDisplay from '../components/TimeDisplay';
 
+import { isEqual } from 'lodash';
 import {
   useBreathMachineMain,
   useBreathEvents,
   useBreathFlags,
+  useBreathMethods,
 } from '../hooks/useBreathMachineHooks';
 
 inspect({
@@ -43,6 +45,10 @@ const BreathSession = ({ sessionSettings }: Props) => {
   const isIdle = useSelector(breathState.breathStateService, (state) =>
     state.matches('idle')
   );
+
+  const { nextEvents } = useBreathMethods();
+
+  console.log('Next Events', nextEvents);
 
   const { canExtend, canPause, canUnPause, canStart, canStop, isExtending } =
     useBreathFlags();
